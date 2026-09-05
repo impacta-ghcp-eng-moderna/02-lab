@@ -7,6 +7,20 @@ namespace TrainingCatalog.Api.Tests;
 public sealed class AttendeeListingTests
 {
 	[Fact]
+	public async Task ReturnsEmptyCollectionWhenTrainingHasNoAttendees()
+	{
+		using var factory = new TrainingCatalogApiFactory();
+		using var client = factory.CreateClient();
+		var training = await CreateTraining(client, "2026-09-14");
+
+		var response = await client.GetAsync($"/api/trainings/{training.Id}/attendees");
+
+		Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+		var attendees = await response.Content.ReadFromJsonAsync<Attendee[]>();
+		Assert.Empty(attendees!);
+	}
+
+	[Fact]
 	public async Task ReturnsAttendeeAfterItIsCreated()
 	{
 		using var factory = new TrainingCatalogApiFactory();

@@ -39,12 +39,12 @@ render_and_comment() {
 }
 
 if [[ "$mode" == "final" ]]; then
+  gh workflow disable "$current_workflow" --repo "$repository"
   render_and_comment "$closing_file"
   gh issue close "$issue_number" --repo "$repository"
-  gh workflow disable "$current_workflow" --repo "$repository" || true
   exit 0
 fi
 
 render_and_comment "$next_step_file"
-gh workflow disable "$current_workflow" --repo "$repository" || true
+gh workflow disable "$current_workflow" --repo "$repository"
 gh workflow enable "$next_workflow" --repo "$repository"
