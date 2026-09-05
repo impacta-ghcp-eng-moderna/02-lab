@@ -33,7 +33,7 @@ jobs:
             "${{ github.workflow }}" \
             "" \
             "" \
-            "A lacuna selecionada foi corrigida com uma alteração delimitada e relacionada ao critério original. A revisão humana do prompt, do diff e do teste focado completa o fluxo supervisionado." \
+            "A conclusão selecionada e confirmada no diálogo foi tratada com uma alteração delimitada e relacionada ao critério original. A revisão humana da proposta, do diff e do teste focado completa o fluxo supervisionado." \
             "Para encerrar, revise o diff, execute o teste focado e comente \`${{ env.STEP_TRIGGER_PHRASE }}\`." \
             "final" \
             ".github/steps/05-encerramento.md"

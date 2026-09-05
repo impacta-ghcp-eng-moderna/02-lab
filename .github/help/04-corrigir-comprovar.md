@@ -1,44 +1,61 @@
 # Passo 4 — Corrigir e comprovar — Instruções completas
 
-## 1. Preparar o handoff
+## 1. Iniciar o handoff
 
-1. No final do relatório, selecione **Corrigir lacuna selecionada**.
+1. No final do relatório, selecione **Preparar correção**.
 2. Confirme que o Chat mudou para o agente implementador.
-3. Confirme que o prompt apareceu no campo de entrada sem ser enviado.
-4. Substitua o início do prompt para deixá-lo específico:
+3. Como o handoff usa `send: true`, confirme que o diálogo começou automaticamente.
+4. Quando o agente pedir a conclusão que deve ser corrigida, responda:
 
 ```text
-Corrija somente a lacuna de evidência do critério 8:
-"treinamento existente sem inscritos retorna 200 com coleção vazia".
-
-Não altere a especificação nem o código de produção e não amplie o escopo. Antes de editar,
-indique os arquivos necessários. Depois da alteração, execute somente AttendeeListingTests,
-relacione o resultado ao critério 8 e apresente o diff para revisão.
+Quero tratar o critério 8 apresentado em "Não foi possível comprovar": falta um teste que
+crie um treinamento sem inscritos, consulte a listagem e verifique 200 OK com coleção vazia.
 ```
 
-5. Leia o texto uma vez e somente então envie.
+5. Quando o agente repetir a conclusão e pedir confirmação, responda:
 
-O fato de o prompt não ser enviado automaticamente comprova a supervisão humana configurada
-por `send: false`.
+```text
+Sim, essa é a conclusão correta.
+```
 
-## 2. Aprovar somente a alteração necessária
+Se o agente repetir uma conclusão diferente, responda `Não` e reinicie a seleção.
 
-O agente deve indicar apenas:
+## 2. Confirmar a alteração antes da implementação
+
+Quando o agente perguntar se pode começar imediatamente ou se você deseja revisar e confirmar
+as alterações, escolha:
+
+```text
+Quero revisar e confirmar as alterações antes da implementação.
+```
+
+O agente deve indicar somente:
 
 ```text
 src/Tests/Api.Tests/AttendeeListingTests.cs
+```
+
+O sumário deve propor um único teste funcional para treinamento existente sem inscritos,
+esperando `200 OK` e coleção vazia.
+
+## 3. Aprovar somente a alteração necessária
+
+Se a proposta estiver correta, responda:
+
+```text
+Confirmo. Pode implementar somente essa alteração.
 ```
 
 Se ele propuser alterar `Program.cs`, a especificação, contratos, persistência ou interface,
 responda:
 
 ```text
-Não aprovei esses arquivos. A implementação parece compatível e a lacuna é somente de
-evidência. Restrinja a mudança a AttendeeListingTests.cs e adicione um único teste funcional
-para o critério 8.
+Não aprovei esses arquivos. A conclusão informa somente ausência de evidência automatizada.
+Restrinja a mudança a AttendeeListingTests.cs e adicione um único teste funcional para o
+critério 8.
 ```
 
-## 3. Conferir o teste produzido
+## 4. Conferir o teste produzido
 
 O teste deve:
 
@@ -68,7 +85,7 @@ public async Task ReturnsEmptyCollectionWhenTrainingHasNoAttendees()
 }
 ```
 
-## 4. Revisar o diff
+## 5. Revisar o diff
 
 Abra **Source Control** e selecione o arquivo alterado. Como alternativa:
 
@@ -79,7 +96,7 @@ git diff -- docs/specs src/Api src/Application src/Infrastructure src/Client
 
 O segundo comando não deve produzir saída.
 
-## 5. Executar a validação focada
+## 6. Executar a validação focada
 
 ```bash
 dotnet test src/Tests/Api.Tests/TrainingCatalog.Api.Tests.csproj \
@@ -96,16 +113,14 @@ Se houver falha:
 4. confirme que nenhum inscrito foi cadastrado;
 5. corrija somente o teste e repita o mesmo comando.
 
-## 6. Registrar a conclusão
+## 7. Confirmar que o critério foi comprovado
 
-Use este registro:
+Antes de avançar, confirme:
 
-```text
-Critério 8: Atendido.
-Evidência: ReturnsEmptyCollectionWhenTrainingHasNoAttendees executa a API pública para um
-treinamento existente sem inscritos, confirma 200 OK e coleção vazia.
-Validação: AttendeeListingTests passou.
-Escopo: especificação e código de produção permaneceram inalterados.
-```
+- [ ] `ReturnsEmptyCollectionWhenTrainingHasNoAttendees` executa a API pública;
+- [ ] o teste usa um treinamento existente sem inscritos;
+- [ ] o resultado esperado é `200 OK` com coleção vazia;
+- [ ] `AttendeeListingTests` passou;
+- [ ] especificação e código de produção permaneceram inalterados.
 
-Volte à issue e comente `comprovado`.
+Se todos os itens estiverem confirmados, volte à issue e comente apenas `comprovado`.

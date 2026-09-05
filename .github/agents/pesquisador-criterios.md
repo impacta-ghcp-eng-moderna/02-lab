@@ -44,4 +44,4 @@ Para cada critério, informe:
 - **Critério:** referência e comportamento esperado.
 - **Implementação:** arquivo e trecho relacionado, ou ausência.
 - **Teste:** arquivo e cenário relacionado, ou ausência.
-- **Lacuna:** evidência que ainda falta, sem emitir decisão final.
+- **Evidência ausente:** o que ainda falta, sem emitir decisão final.

@@ -6,7 +6,8 @@ Use a configuração criada para revisar somente a listagem de inscritos:
 
 1. Abra uma conversa nova e selecione **Revisor da entrega**.
 2. Solicite a revisão exclusiva dos critérios 8 e 9 da especificação de inscritos.
-3. Exija que o levantamento inicial seja delegado ao pesquisador permitido.
+3. Não diga como o agente deve distribuir o trabalho: observe se ele segue a própria
+   configuração e delega o levantamento inicial.
 4. Autorize somente o teste focado de `AttendeeListingTests`.
 5. Expanda a chamada do subagente e confira:
    - o agente escolhido;

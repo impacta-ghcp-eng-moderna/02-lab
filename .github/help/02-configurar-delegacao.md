@@ -54,7 +54,7 @@ Para cada critério, informe:
 - **Critério:** referência e comportamento esperado.
 - **Implementação:** arquivo e trecho relacionado, ou ausência.
 - **Teste:** arquivo e cenário relacionado, ou ausência.
-- **Lacuna:** evidência que ainda falta, sem emitir decisão final.
+- **Evidência ausente:** o que ainda falta, sem emitir decisão final.
 ```
 
 ## 2. Substituir o revisor
@@ -77,10 +77,19 @@ agents:
 user-invocable: true
 disable-model-invocation: true
 handoffs:
-  - label: Corrigir lacuna selecionada
+  - label: Preparar correção
     agent: agent
-    prompt: Corrija somente a lacuna selecionada no relatório anterior. Não altere a especificação nem amplie o escopo. Antes de editar, indique os arquivos necessários. Depois da alteração, execute a validação focada, relacione o resultado ao critério correspondente e apresente o diff para revisão.
-    send: false
+    prompt: >-
+      Revise a lista de conclusões apresentada e peça ao usuário para selecionar qual delas
+      deseja que seja corrigida. Quando o usuário indicar uma conclusão, confirme mais uma vez
+      se essa é a conclusão correta; se não for, reinicie a seleção. Em seguida, antes de
+      começar a implementação, pergunte se pode iniciar imediatamente ou se o usuário deseja
+      revisar e confirmar as alterações. Se o usuário decidir confirmar, indique os arquivos
+      que serão alterados e apresente um breve sumário da alteração. Trate somente a conclusão
+      selecionada. Não altere a especificação nem amplie o escopo. Depois da alteração, execute
+      a validação focada, relacione o resultado ao critério correspondente e apresente o diff
+      para revisão.
+    send: true
 ---
 
 # Revisor da entrega
@@ -141,23 +150,40 @@ como próxima etapa depois das conclusões, nunca como substituto de um relatór
 1. Salve os dois arquivos.
 2. Execute **Chat: Open Customizations**.
 3. Abra **Agents**.
-4. Confirme que **Revisor da entrega** aparece no seletor.
-5. Confirme que **Pesquisador de critérios** não aparece no seletor.
-6. Abra o pesquisador e confira `read`, `search` e `agents: []`.
-7. Abra o revisor e confira `execute`, `agent` e somente `Pesquisador de critérios` em
-   `agents`.
-8. Confira que o handoff usa `send: false`.
+4. Na janela **Customizations**, confirme que as duas definições aparecem. Essa janela
+   cataloga tanto agentes selecionáveis quanto agentes internos.
+5. Abra o seletor de agentes no rodapé do **Chat**.
+6. Confirme que **Revisor da entrega** aparece nesse seletor.
+7. Confirme que **Pesquisador de critérios** não aparece nesse seletor.
+8. Volte à janela **Customizations**, abra o pesquisador e confira:
+   - `tools` contém somente `read` e `search`;
+   - `agents` é uma lista vazia (`[]`);
+   - `user-invocable` é `false`;
+   - `disable-model-invocation` é `false`.
+9. Abra o revisor e confira:
+   - `tools` contém somente `read`, `search`, `execute` e `agent`;
+   - `agents` contém somente `Pesquisador de critérios`;
+   - `user-invocable` é `true`;
+   - `disable-model-invocation` é `true`.
+10. Confira que o handoff usa `send: true` e que o prompt exige seleção e confirmação antes
+    da implementação.
 
-Se o pesquisador aparecer no seletor, confirme a grafia de `user-invocable: false`. Se o
-revisor não puder delegar, confirme a tool `agent` e o nome, com acentos, na lista `agents`.
+Se o pesquisador aparecer no seletor do **Chat**, confirme a grafia de
+`user-invocable: false`. Se o revisor não puder delegar, confirme a tool `agent` e o nome,
+com acentos, na lista `agents`.
 
-## 4. Revisar o diff
+## 4. Confirmar que a delegação foi configurada
 
-Abra **Source Control** e confirme que somente estes arquivos mudaram:
+Antes de avançar, confirme:
 
-```text
-.github/agents/pesquisador-criterios.md
-.github/agents/revisor-entrega.md
-```
+- [ ] as duas definições aparecem na janela **Customizations**;
+- [ ] somente **Revisor da entrega** aparece no seletor de agentes do Chat;
+- [ ] o pesquisador possui somente `read` e `search` em `tools`;
+- [ ] o pesquisador possui `agents: []`;
+- [ ] o pesquisador usa `user-invocable: false`;
+- [ ] o revisor possui somente `read`, `search`, `execute` e `agent` em `tools`;
+- [ ] o revisor permite somente `Pesquisador de critérios` em `agents`;
+- [ ] o handoff **Preparar correção** aponta para o agente implementador;
+- [ ] o handoff usa `send: true` e exige seleção e confirmação antes da implementação.
 
-Volte à issue e comente `configurado`.
+Se todos os itens estiverem confirmados, volte à issue e comente apenas `configurado`.

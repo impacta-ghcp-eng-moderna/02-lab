@@ -33,7 +33,7 @@ jobs:
     with:
       exercise-title: "Módulo 2 — Lab de custom agents, subagents e handoffs"
       issue-title-prefix: "Lab: "
-      intro-message: "Neste lab, você configurará uma revisão delegada com menor privilégio e usará um handoff supervisionado para corrigir uma lacuna de evidência."
+      intro-message: "Neste lab, você configurará uma revisão delegada com menor privilégio e usará um handoff supervisionado para tratar uma conclusão sem evidência suficiente."
 
   validate_start_branch:
     name: Validar branch de início

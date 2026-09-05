@@ -13,10 +13,19 @@ agents:
 user-invocable: true
 disable-model-invocation: true
 handoffs:
-  - label: Corrigir lacuna selecionada
+  - label: Preparar correção
     agent: agent
-    prompt: Corrija somente a lacuna selecionada no relatório anterior. Não altere a especificação nem amplie o escopo. Antes de editar, indique os arquivos necessários. Depois da alteração, execute a validação focada, relacione o resultado ao critério correspondente e apresente o diff para revisão.
-    send: false
+    prompt: >-
+      Revise a lista de conclusões apresentada e peça ao usuário para selecionar qual delas
+      deseja que seja corrigida. Quando o usuário indicar uma conclusão, confirme mais uma vez
+      se essa é a conclusão correta; se não for, reinicie a seleção. Em seguida, antes de
+      começar a implementação, pergunte se pode iniciar imediatamente ou se o usuário deseja
+      revisar e confirmar as alterações. Se o usuário decidir confirmar, indique os arquivos
+      que serão alterados e apresente um breve sumário da alteração. Trate somente a conclusão
+      selecionada. Não altere a especificação nem amplie o escopo. Depois da alteração, execute
+      a validação focada, relacione o resultado ao critério correspondente e apresente o diff
+      para revisão.
+    send: true
 ---
 
 # Revisor da entrega

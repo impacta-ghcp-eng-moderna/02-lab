@@ -33,6 +33,6 @@ jobs:
             "${{ github.workflow }}" \
             "05-encerramento.yml" \
             ".github/steps/04-corrigir-comprovar.md" \
-            "A revisão distinguiu comportamento comprovado de ausência de evidência, e você conferiu manualmente uma conclusão. Agora o handoff permitirá corrigir somente a lacuna selecionada, sem envio automático." \
+            "A revisão distinguiu comportamento comprovado de ausência de evidência, e você conferiu manualmente uma conclusão. Agora o handoff iniciará um diálogo para selecionar e confirmar uma única conclusão antes da implementação." \
             "Para avançar, confira o relatório e uma evidência e comente \`${{ env.STEP_TRIGGER_PHRASE }}\`." \
             "next"

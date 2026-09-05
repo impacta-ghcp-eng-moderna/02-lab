@@ -7,35 +7,37 @@
 3. Envie exatamente:
 
 ```text
-Revise somente os critérios 8 e 9 de
+Revise a implementação da listagem de inscritos contra os critérios 8 e 9 de
 `docs/specs/training-attendees-vertical-slice.md`.
-
-Delegue o levantamento inicial ao subagente `Pesquisador de critérios`. Forneça a ele uma
-tarefa autossuficiente que indique a especificação, `src/Api/Program.cs`,
-`src/Tests/Api.Tests/AttendeeListingTests.cs` e o formato de evidências esperado.
-
-Depois, faça você mesmo o julgamento final. Execute somente:
-
-dotnet test src/Tests/Api.Tests/TrainingCatalog.Api.Tests.csproj --filter FullyQualifiedName~AttendeeListingTests
-
-Não altere arquivos e não revise outros critérios.
 ```
 
-Quando o VS Code mostrar a confirmação nativa do terminal, autorize somente esse comando.
+O prompt informa somente o objeto e o limite da revisão. A decisão de delegar, o formato do
+relatório, a busca por evidências, a validação focada e os limites de atuação devem vir das
+instruções do próprio revisor.
+
+Quando o VS Code mostrar a confirmação nativa do terminal, autorize somente se o comando
+estiver restrito a `AttendeeListingTests`. Um comando adequado é:
+
+```bash
+dotnet test src/Tests/Api.Tests/TrainingCatalog.Api.Tests.csproj \
+  --filter FullyQualifiedName~AttendeeListingTests
+```
 
 ## 2. Inspecionar a delegação
 
 Expanda a chamada do subagente no Chat e confirme:
 
 - nome **Pesquisador de critérios**;
-- critérios 8 e 9 no prompt recebido;
-- os três caminhos indicados;
-- formato de evidências solicitado;
+- critérios 8 e 9 e a especificação aplicável no prompt recebido;
+- contexto suficiente para localizar implementação e testes sem depender do histórico do
+  Chat principal;
+- formato de evidências esperado;
 - somente tools de leitura e busca;
 - ausência de comandos e edições.
 
-Se outro agente for usado, interrompa a revisão, confira o campo `agents` do revisor e envie
-novamente o prompt em uma conversa nova.
+Se não houver delegação, não torne o prompt mais prescritivo. Interrompa a revisão, confira a
+responsabilidade de delegação e o campo `agents` do revisor e repita o mesmo prompt em uma
+conversa nova.
 
 ## 3. Conferir manualmente uma evidência
 
@@ -74,4 +76,17 @@ git status --short
 Antes do próximo passo, somente os dois arquivos de agentes criados no passo 2 podem aparecer.
 A revisão não deve adicionar outras mudanças.
 
-Volte à issue e comente `revisado`.
+## 6. Confirmar que a revisão foi concluída
+
+Antes de avançar, confirme:
+
+- [ ] o revisor invocou **Pesquisador de critérios** sem que o prompt mandasse delegar;
+- [ ] o pesquisador usou somente leitura e busca;
+- [ ] a tarefa recebida pelo pesquisador tinha contexto suficiente;
+- [ ] o revisor fez o julgamento final nas três categorias previstas;
+- [ ] o critério 9 foi classificado como **Atendido**;
+- [ ] o critério 8 foi classificado como **Não foi possível comprovar**;
+- [ ] conferi manualmente no teste a evidência do critério 9;
+- [ ] a revisão não alterou arquivos.
+
+Se todos os itens estiverem confirmados, volte à issue e comente apenas `revisado`.

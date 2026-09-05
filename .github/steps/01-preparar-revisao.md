@@ -1,6 +1,6 @@
 # Passo 1 — Preparar a revisão
 
-**Tempo sugerido: 5 minutos**
+**Tempo sugerido: 10 minutos**
 
 Você partirá da aplicação concluída no Lab 01. Antes de configurar novos agentes, confirme a
 linha de base e localize os contratos e evidências que serão revisados.
@@ -8,15 +8,17 @@ linha de base e localize os contratos e evidências que serão revisados.
 [![Abrir no GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/{{ repository }}?quickstart=1)
 
 1. Abra o Codespace pelo botão acima.
-2. No terminal, selecione a branch `inicio`.
-3. Confirme que o .NET 10 está disponível.
-4. Execute somente os testes funcionais de listagem de inscritos.
-5. Localize:
+2. Aguarde a criação e a preparação do ambiente terminarem.
+3. No terminal, selecione a branch `inicio`.
+4. Leia o README exibido nessa branch e volte à issue para continuar o roteiro.
+5. Confirme que o .NET 10 está disponível.
+6. Execute somente os testes funcionais de listagem de inscritos.
+7. Localize:
    - os critérios 8 e 9 da especificação de inscritos;
    - a implementação da rota de listagem;
    - os testes de listagem;
    - o agente `Revisor da entrega`.
-6. Abra **Chat: Open Customizations** e encontre a seção **Agents**.
+8. Abra **Chat: Open Customizations** e encontre a seção **Agents**.
 
 Não altere arquivos neste passo. O teste focado deve passar, mas isso ainda não comprova que
 todos os cenários exigidos pela especificação foram exercitados.

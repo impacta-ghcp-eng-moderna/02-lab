@@ -7,7 +7,8 @@ Siga este roteiro sem alterar arquivos.
 1. Volte ao comentário do passo 1.
 2. Clique em **Abrir no GitHub Codespaces**.
 3. Confirme o repositório copiado por você e crie o Codespace.
-4. Aguarde o terminal terminar a preparação.
+4. Aguarde o terminal terminar a preparação. A criação e a inicialização costumam consumir
+   de 4 a 6 minutos e já fazem parte do tempo deste passo.
 5. Execute:
 
 ```bash
@@ -19,6 +20,10 @@ dotnet --version
 
 O nome da branch deve ser `inicio`, o status não deve listar alterações e a versão do SDK
 deve começar com `10.`.
+
+Ao trocar de branch, o README também muda. Leia o README de `inicio`: ele confirma que você
+está no ponto de partida correto e orienta a voltar à issue. Não use novamente o botão de
+criação do template.
 
 ## 2. Executar a linha de base focada
 
