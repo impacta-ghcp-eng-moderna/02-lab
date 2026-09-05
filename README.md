@@ -1,24 +1,27 @@
-# Lab 02 — Custom agents, subagents e handoffs
+# Lab 02 — Ponto de partida
 
-Este lab dá continuidade à aplicação de catálogo de treinamentos concluída no Lab 01.
-Você trabalhará com revisão delegada e correção supervisionada para evoluir a aplicação
-com apoio do GitHub Copilot.
+Você está no ponto de partida correto. A branch `inicio` contém a aplicação concluída no
+Lab 01 e é onde todo este exercício deve ser realizado.
 
-## Como iniciar
+## Como continuar
 
-1. Use o botão abaixo para criar seu próprio repositório.
-2. Na tela de criação, marque **Include all branches**.
-3. Aguarde alguns segundos, atualize a página e siga a issue criada no novo repositório.
+1. Volte à issue aberta **Lab: Módulo 2 — Lab de custom agents, subagents e handoffs**.
+2. Siga o comentário atual da issue.
+3. Use os links de instruções completas publicados na própria issue.
+4. Não volte para a branch `main` e não use novamente **Use this template**.
 
-[![Iniciar lab](https://img.shields.io/badge/Iniciar%20lab-%E2%86%92-1f883d?style=for-the-badge&logo=github&labelColor=197935)](https://github.com/new?template_owner=impacta-ghcp-eng-moderna&template_name=02-lab&owner=%40me&name=impacta-ghcp-eng-moderna-02-lab&description=M%C3%B3dulo+2%3A+lab+de+custom+agents%2C+subagents+e+handoffs)
+> [!NOTE]
+> A branch `main` mantém a infraestrutura que conduz a issue, mas o trabalho do aluno
+> permanece na branch `inicio`.
 
-> [!IMPORTANT]
-> Marque **Include all branches** antes de criar o repositório. O lab depende da branch
-> `inicio`, que contém o ponto de partida da atividade.
+Confirme o ponto de partida:
 
-## Ponto de partida
+```bash
+git branch --show-current
+# Resultado esperado: inicio
 
-A branch `inicio` contém a aplicação concluída no Lab 01 e as customizações herdadas
-daquele módulo.
+git status --short
+# Resultado esperado: nenhuma saída
+```
 
-O lab foi dimensionado para aproximadamente **60 minutos** e será conduzido por uma issue.
+Duração aproximada: **60 minutos**.
