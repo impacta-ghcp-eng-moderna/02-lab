@@ -31,7 +31,7 @@ jobs:
             "${{ github.event.comment.body }}" \
             "${{ env.STEP_TRIGGER_PHRASE }}" \
             "${{ github.workflow }}" \
-            "03-apos-configuracao.yml" \
+            "03-revisar-criterios.yml" \
             ".github/steps/02-configurar-delegacao.md" \
             "A linha de base e os arquivos relevantes foram localizados. Agora você configurará uma fronteira explícita entre pesquisa de evidências e julgamento, usando o menor conjunto de capacidades necessário." \
             "Para avançar, conclua a preparação e comente \`${{ env.STEP_TRIGGER_PHRASE }}\`." \

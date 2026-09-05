@@ -1,4 +1,4 @@
-name: Passo 4 - apos revisao
+name: Passo 5 - encerramento
 
 on:
   issue_comment:
@@ -10,10 +10,10 @@ permissions:
   issues: write
 
 env:
-  STEP_TRIGGER_PHRASE: revisado
+  STEP_TRIGGER_PHRASE: comprovado
 
 jobs:
-  progress_lab:
+  finish_lab:
     if: >-
       ${{ !github.event.repository.is_template
       && !github.event.issue.pull_request
@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: Avançar lab
+      - name: Encerrar lab
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -31,8 +31,9 @@ jobs:
             "${{ github.event.comment.body }}" \
             "${{ env.STEP_TRIGGER_PHRASE }}" \
             "${{ github.workflow }}" \
-            "05-encerrar-lab.yml" \
-            ".github/steps/04-corrigir-comprovar.md" \
-            "A revisão distinguiu comportamento comprovado de ausência de evidência, e você conferiu manualmente uma conclusão. Agora o handoff permitirá corrigir somente a lacuna selecionada, sem envio automático." \
-            "Para avançar, confira o relatório e uma evidência e comente \`${{ env.STEP_TRIGGER_PHRASE }}\`." \
-            "next"
+            "" \
+            "" \
+            "A lacuna selecionada foi corrigida com uma alteração delimitada e relacionada ao critério original. A revisão humana do prompt, do diff e do teste focado completa o fluxo supervisionado." \
+            "Para encerrar, revise o diff, execute o teste focado e comente \`${{ env.STEP_TRIGGER_PHRASE }}\`." \
+            "final" \
+            ".github/steps/05-encerramento.md"

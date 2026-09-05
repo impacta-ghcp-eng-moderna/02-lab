@@ -1,4 +1,4 @@
-name: Passo 5 - encerrar lab
+name: Passo 3 - apos configuracao
 
 on:
   issue_comment:
@@ -10,10 +10,10 @@ permissions:
   issues: write
 
 env:
-  STEP_TRIGGER_PHRASE: comprovado
+  STEP_TRIGGER_PHRASE: configurado
 
 jobs:
-  finish_lab:
+  progress_lab:
     if: >-
       ${{ !github.event.repository.is_template
       && !github.event.issue.pull_request
@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: Encerrar lab
+      - name: Avançar lab
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -31,9 +31,8 @@ jobs:
             "${{ github.event.comment.body }}" \
             "${{ env.STEP_TRIGGER_PHRASE }}" \
             "${{ github.workflow }}" \
-            "" \
-            "" \
-            "A lacuna selecionada foi corrigida com uma alteração delimitada e relacionada ao critério original. A revisão humana do prompt, do diff e do teste focado completa o fluxo supervisionado." \
-            "Para encerrar, revise o diff, execute o teste focado e comente \`${{ env.STEP_TRIGGER_PHRASE }}\`." \
-            "final" \
-            ".github/steps/05-encerramento.md"
+            "04-corrigir-comprovar.yml" \
+            ".github/steps/03-revisar-criterios.md" \
+            "O pesquisador está restrito a fatos e o revisor mantém o julgamento final, com delegação limitada a um único subagente. O handoff também preserva uma decisão humana antes de qualquer correção." \
+            "Para avançar, confira os agentes e o handoff e comente \`${{ env.STEP_TRIGGER_PHRASE }}\`." \
+            "next"
