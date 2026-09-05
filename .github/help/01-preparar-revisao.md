@@ -1,5 +1,13 @@
 # Passo 1 — Preparar a revisão — Instruções completas
 
+Neste passo, você preparará o ambiente usado durante todo o lab. A criação do Codespace, a
+troca para a branch `inicio` e a execução do teste focado estabelecem uma linha de base antes
+de qualquer configuração.
+
+Você também reconhecerá onde ficam contrato, implementação, evidências automatizadas e
+customizações do Copilot. Essa exploração é intencionalmente read-only: não corrija nem
+configure nada ainda.
+
 Siga este roteiro sem alterar arquivos.
 
 ## 1. Abrir o ambiente correto
@@ -7,8 +15,7 @@ Siga este roteiro sem alterar arquivos.
 1. Volte ao comentário do passo 1.
 2. Clique em **Abrir no GitHub Codespaces**.
 3. Confirme o repositório copiado por você e crie o Codespace.
-4. Aguarde o terminal terminar a preparação. A criação e a inicialização costumam consumir
-   de 4 a 6 minutos e já fazem parte do tempo deste passo.
+4. Aguarde o terminal terminar a preparação.
 5. Execute:
 
 ```bash
@@ -78,3 +85,9 @@ Chat antes de continuar.
 - [ ] abri a área de customizações.
 
 Volte à issue e comente `preparado`.
+
+## Referências
+
+- [Quickstart for GitHub Codespaces](https://docs.github.com/en/codespaces/quickstart)
+- [`dotnet test` — .NET CLI](https://learn.microsoft.com/dotnet/core/tools/dotnet-test)
+- [Custom agents in VS Code](https://code.visualstudio.com/docs/agent-customization/custom-agents)

@@ -1,11 +1,47 @@
 # Passo 2 — Configurar a delegação — Instruções completas
 
-Crie os arquivos abaixo exatamente como apresentados. As restrições fazem parte do objetivo do
-lab: não adicione outras tools ou agentes.
+Neste passo, você separará **pesquisa** de **julgamento**.
+
+O **Pesquisador de critérios** será um subagente interno. Ele recebe do revisor uma tarefa
+delimitada, lê a especificação, procura a implementação e os testes relacionados e devolve um
+mapa de evidências. Ele não aparece para seleção manual, não executa comandos, não altera
+arquivos e não decide se a entrega foi aprovada.
+
+O **Revisor da entrega** será o coordenador selecionado no Chat. Ele decide quando chamar o
+pesquisador, avalia criticamente o resultado recebido, executa somente testes focados e
+produz as conclusões finais. Ele pode ler, buscar, executar e delegar, mas não editar.
+
+Cada arquivo de agente possui duas partes. O front matter YAML controla nome, tools,
+subagentes permitidos, visibilidade e handoffs. O corpo Markdown descreve como o agente deve
+trabalhar, o que deve entregar e quais limites deve respeitar. As duas partes são necessárias:
+permissão sem instrução é ambígua, e instrução sem restrição não implementa menor privilégio.
+
+As restrições abaixo fazem parte do exercício. Crie os arquivos exatamente como apresentados;
+não adicione outras tools ou agentes.
 
 ## 1. Criar o pesquisador
 
-Crie `.github/agents/pesquisador-criterios.md` com:
+### 1.1 Criar o arquivo
+
+1. Na barra lateral do VS Code, selecione **Explorer**.
+2. Expanda `.github`.
+3. Clique com o botão direito na pasta `agents`.
+4. Selecione **New File**.
+5. Digite `pesquisador-criterios.md` e pressione <kbd>Enter</kbd>.
+6. Cole o conteúdo abaixo.
+7. Salve com <kbd>Ctrl</kbd>+<kbd>S</kbd>.
+
+### 1.2 Entender a configuração
+
+Antes de colar, observe os efeitos esperados:
+
+- `tools: [read, search]`: permite localizar e ler evidências, sem terminal ou edição;
+- `agents: []`: impede que o pesquisador crie outra camada de subagentes;
+- `user-invocable: false`: oculta o pesquisador do seletor manual do Chat;
+- `disable-model-invocation: false`: permite que o revisor autorizado o invoque;
+- as instruções pedem fatos e evidências, mas proíbem aprovação ou rejeição.
+
+Conteúdo de `.github/agents/pesquisador-criterios.md`:
 
 ```markdown
 ---
@@ -59,7 +95,28 @@ Para cada critério, informe:
 
 ## 2. Substituir o revisor
 
-Substitua `.github/agents/revisor-entrega.md` por:
+### 2.1 Abrir e substituir o arquivo
+
+1. No **Explorer**, expanda `.github/agents`.
+2. Selecione `revisor-entrega.md`.
+3. Pressione <kbd>Ctrl</kbd>+<kbd>A</kbd> dentro do editor.
+4. Cole o conteúdo abaixo para substituir todo o arquivo.
+5. Salve com <kbd>Ctrl</kbd>+<kbd>S</kbd>.
+
+### 2.2 Entender a coordenação
+
+O revisor precisa:
+
+- `read` e `search` para conferir pessoalmente as evidências levantadas;
+- `execute` para rodar somente a validação focada;
+- `agent` para invocar um subagente;
+- `agents: [Pesquisador de critérios]` para impedir delegação a outro agente;
+- nenhuma tool de edição, porque a revisão deve permanecer read-only;
+- `user-invocable: true` para aparecer no seletor do Chat;
+- `disable-model-invocation: true` para não ser escolhido como subagente por outro agente;
+- um handoff para o implementador, executado somente depois do relatório.
+
+Conteúdo de `.github/agents/revisor-entrega.md`:
 
 ```markdown
 ---
@@ -148,25 +205,31 @@ como próxima etapa depois das conclusões, nunca como substituto de um relatór
 ## 3. Conferir a configuração
 
 1. Salve os dois arquivos.
-2. Execute **Chat: Open Customizations**.
-3. Abra **Agents**.
-4. Na janela **Customizations**, confirme que as duas definições aparecem. Essa janela
+2. Pressione <kbd>F1</kbd> ou <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>.
+3. Digite e execute **Chat: Open Customizations**.
+4. Na janela aberta, selecione **Agents**.
+5. Na janela **Customizations**, confirme que as duas definições aparecem. Essa janela
    cataloga tanto agentes selecionáveis quanto agentes internos.
-5. Abra o seletor de agentes no rodapé do **Chat**.
-6. Confirme que **Revisor da entrega** aparece nesse seletor.
-7. Confirme que **Pesquisador de critérios** não aparece nesse seletor.
-8. Volte à janela **Customizations**, abra o pesquisador e confira:
+6. Abra a visualização do **Chat**.
+7. No rodapé do Chat, selecione o nome do agente atual para abrir o seletor.
+8. Entre os dois agentes criados neste passo, confirme que **Revisor da entrega** aparece
+   nesse seletor.
+9. Confirme que **Pesquisador de critérios** não aparece nesse seletor. Os agentes nativos do
+   VS Code podem continuar visíveis normalmente.
+10. Volte à janela **Customizations**, selecione **Pesquisador de critérios** e confira:
    - `tools` contém somente `read` e `search`;
    - `agents` é uma lista vazia (`[]`);
    - `user-invocable` é `false`;
    - `disable-model-invocation` é `false`.
-9. Abra o revisor e confira:
+11. Volte à lista **Agents**, selecione **Revisor da entrega** e confira:
    - `tools` contém somente `read`, `search`, `execute` e `agent`;
    - `agents` contém somente `Pesquisador de critérios`;
    - `user-invocable` é `true`;
    - `disable-model-invocation` é `true`.
-10. Confira que o handoff usa `send: true` e que o prompt exige seleção e confirmação antes
-    da implementação.
+12. Localize `handoffs` no revisor e confira que **Preparar correção**:
+    - aponta para `agent`;
+    - usa `send: true`;
+    - exige seleção e confirmação antes da implementação.
 
 Se o pesquisador aparecer no seletor do **Chat**, confirme a grafia de
 `user-invocable: false`. Se o revisor não puder delegar, confirme a tool `agent` e o nome,
@@ -177,7 +240,8 @@ com acentos, na lista `agents`.
 Antes de avançar, confirme:
 
 - [ ] as duas definições aparecem na janela **Customizations**;
-- [ ] somente **Revisor da entrega** aparece no seletor de agentes do Chat;
+- [ ] entre os dois agentes criados, somente **Revisor da entrega** aparece no seletor do
+  Chat;
 - [ ] o pesquisador possui somente `read` e `search` em `tools`;
 - [ ] o pesquisador possui `agents: []`;
 - [ ] o pesquisador usa `user-invocable: false`;
@@ -187,3 +251,10 @@ Antes de avançar, confirme:
 - [ ] o handoff usa `send: true` e exige seleção e confirmação antes da implementação.
 
 Se todos os itens estiverem confirmados, volte à issue e comente apenas `configurado`.
+
+## Referências
+
+- [Custom agents in VS Code — estrutura, front matter e handoffs](https://code.visualstudio.com/docs/agent-customization/custom-agents)
+- [Subagents in Visual Studio Code](https://code.visualstudio.com/docs/agents/run/subagents)
+- [Use tools with agents](https://code.visualstudio.com/docs/agents/run/tools)
+- [Copilot customization cheat sheet](https://docs.github.com/en/copilot/reference/customization-cheat-sheet)

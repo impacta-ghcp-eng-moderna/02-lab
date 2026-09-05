@@ -1,52 +1,70 @@
 # Passo 4 — Corrigir e comprovar — Instruções completas
 
+Neste passo, você usará um handoff para continuar o trabalho no agente implementador sem
+perder o contexto da revisão. Como `send: true` está configurado, o handoff inicia o diálogo
+automaticamente; isso não representa autorização automática para editar.
+
+O agente deverá oferecer uma escolha de conclusão, pedir confirmação e perguntar se pode
+implementar imediatamente ou se você deseja revisar a proposta. Dê preferência às opções
+apresentadas pela UI. Os textos deste help existem somente como contingência quando não houver
+uma opção equivalente.
+
+Depois de autorizar uma alteração delimitada, você revisará o diff e executará o teste focado.
+O objetivo é relacionar a mudança à conclusão escolhida, não corrigir outros itens encontrados
+durante a conversa.
+
 ## 1. Iniciar o handoff
 
 1. No final do relatório, selecione **Preparar correção**.
 2. Confirme que o Chat mudou para o agente implementador.
 3. Como o handoff usa `send: true`, confirme que o diálogo começou automaticamente.
-4. Quando o agente pedir a conclusão que deve ser corrigida, responda:
+4. Quando o agente pedir a conclusão que deve ser corrigida, selecione na UI a opção
+   correspondente ao critério 8 em **Não foi possível comprovar**.
+5. Use texto somente se a UI não apresentar uma opção equivalente:
 
 ```text
-Quero tratar o critério 8 apresentado em "Não foi possível comprovar": falta um teste que
-crie um treinamento sem inscritos, consulte a listagem e verifique 200 OK com coleção vazia.
+Quero tratar a conclusão referente ao critério 8 em "Não foi possível comprovar".
 ```
 
-5. Quando o agente repetir a conclusão e pedir confirmação, responda:
+6. Quando o agente repetir a conclusão, confira se ela corresponde à opção escolhida e use a
+   confirmação oferecida pela UI.
+7. Somente se a UI não oferecer uma opção equivalente, responda:
 
 ```text
 Sim, essa é a conclusão correta.
 ```
 
-Se o agente repetir uma conclusão diferente, responda `Não` e reinicie a seleção.
+Se o agente repetir uma conclusão diferente, use a opção negativa da UI e reinicie a seleção.
+Se essa opção não existir, responda `Não`.
 
 ## 2. Confirmar a alteração antes da implementação
 
 Quando o agente perguntar se pode começar imediatamente ou se você deseja revisar e confirmar
-as alterações, escolha:
+as alterações, selecione na UI a opção equivalente a **revisar e confirmar antes da
+implementação**.
+
+Somente se a UI não oferecer essa opção, responda:
 
 ```text
 Quero revisar e confirmar as alterações antes da implementação.
 ```
 
-O agente deve indicar somente:
-
-```text
-src/Tests/Api.Tests/AttendeeListingTests.cs
-```
-
-O sumário deve propor um único teste funcional para treinamento existente sem inscritos,
-esperando `200 OK` e coleção vazia.
+Confira se os arquivos e o sumário apresentados são compatíveis com a conclusão realmente
+selecionada. Para o cenário esperado deste lab, a proposta deve se limitar ao teste funcional
+de listagem, sem alterar especificação ou produção.
 
 ## 3. Aprovar somente a alteração necessária
 
-Se a proposta estiver correta, responda:
+Se a proposta estiver correta, use a opção de confirmação oferecida pela UI.
+
+Somente se a UI não oferecer uma opção equivalente, responda:
 
 ```text
 Confirmo. Pode implementar somente essa alteração.
 ```
 
 Se ele propuser alterar `Program.cs`, a especificação, contratos, persistência ou interface,
+use a opção da UI para rejeitar ou solicitar ajustes. Somente se a UI não oferecer essa opção,
 responda:
 
 ```text
@@ -55,9 +73,9 @@ Restrinja a mudança a AttendeeListingTests.cs e adicione um único teste funcio
 critério 8.
 ```
 
-## 4. Conferir o teste produzido
+## 4. Conferir a alteração produzida
 
-O teste deve:
+Para a conclusão esperada neste lab, o teste deve:
 
 1. criar um treinamento existente;
 2. não cadastrar inscritos;
@@ -66,8 +84,9 @@ O teste deve:
 5. desserializar a coleção;
 6. verificar que a coleção está vazia.
 
-Se o agente não produzir o teste corretamente, use este fallback dentro da classe
-`AttendeeListingTests`:
+Se a alteração não corresponder à conclusão selecionada, peça correção pelo diálogo. Se o
+agente ainda não conseguir produzir o teste correto e o grupo precisar prosseguir, use este
+fallback:
 
 ```csharp
 [Fact]
@@ -124,3 +143,10 @@ Antes de avançar, confirme:
 - [ ] especificação e código de produção permaneceram inalterados.
 
 Se todos os itens estiverem confirmados, volte à issue e comente apenas `comprovado`.
+
+## Referências
+
+- [Custom agents in VS Code — handoffs e `send`](https://code.visualstudio.com/docs/agent-customization/custom-agents#_handoffs)
+- [Use tools with agents — revisão de chamadas e aprovações](https://code.visualstudio.com/docs/agents/run/tools)
+- [Source Control in VS Code](https://code.visualstudio.com/docs/sourcecontrol/overview)
+- [`dotnet test` — .NET CLI](https://learn.microsoft.com/dotnet/core/tools/dotnet-test)

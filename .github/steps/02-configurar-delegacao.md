@@ -1,30 +1,41 @@
 # Passo 2 — Configurar a delegação
 
-**Tempo sugerido: 8 minutos**
+Neste passo, você criará um subagente especializado e transformará o revisor existente em um
+coordenador. A pesquisa de critérios e evidências será executada em contexto isolado, enquanto
+o julgamento final permanecerá no agente escolhido pelo aluno.
 
-Crie uma fronteira explícita entre coleta de evidências e julgamento:
+Essa separação permite aplicar menor privilégio: o pesquisador poderá somente ler e buscar; o
+revisor poderá também executar testes focados e delegar, mas nenhum dos dois poderá editar.
+As capacidades e a disponibilidade de cada agente serão definidas no front matter; suas
+responsabilidades e limites serão descritos no corpo Markdown.
 
-1. Crie o agente **Pesquisador de critérios** em `.github/agents/`.
-2. Oculte-o da seleção manual e permita sua invocação como subagente.
-3. Disponibilize somente leitura e busca.
-4. Use `agents: []` para impedir que o pesquisador delegue novamente.
-5. Adapte o **Revisor da entrega** para:
-   - usar a tool de subagentes;
-   - permitir somente o pesquisador;
-   - manter o julgamento final;
-   - continuar sem tools de edição.
-6. Adicione o handoff **Preparar correção** para o agente implementador.
-7. Configure `send: true` para iniciar o diálogo de seleção e confirmação ao acionar o
-   handoff.
-8. Reabra **Chat: Open Customizations** e confira as duas definições.
-9. Abra o seletor de agentes do Chat e confirme que somente o revisor pode ser escolhido
-   manualmente.
+Você criará dois papéis diferentes:
 
-O pesquisador deve levantar fatos; o revisor deve avaliar se as evidências sustentam os
-critérios. Nenhum deles deve editar a entrega durante a revisão.
+- **Pesquisador de critérios:** subagente interno que lê a especificação, encontra
+  implementação e testes e devolve fatos, sem executar comandos, editar ou aprovar a entrega.
+- **Revisor da entrega:** agente selecionado pelo aluno que delega a pesquisa, executa a
+  validação focada e decide quais critérios estão ou não comprovados.
+
+Para configurar esses papéis:
+
+1. Em `.github/agents/`, crie `pesquisador-criterios.md`.
+2. Dê ao pesquisador somente `read` e `search`, impeça nova delegação e oculte-o do seletor
+   do Chat.
+3. Instrua o pesquisador a relacionar cada critério à implementação e aos testes, reportando
+   evidências ausentes sem fazer o julgamento final.
+4. Abra `.github/agents/revisor-entrega.md`.
+5. Dê ao revisor leitura, busca, execução e delegação, sem edição.
+6. Permita que ele invoque somente **Pesquisador de critérios**.
+7. Instrua o revisor a julgar as evidências nas categorias **Atendido**, **Não atendido** e
+   **Não foi possível comprovar**.
+8. Adicione o handoff **Preparar correção**, com `send: true`, para iniciar um diálogo que
+   selecione e confirme uma conclusão antes de qualquer implementação.
+9. Confira na interface que as duas definições existem, mas que, entre elas, somente o revisor
+   aparece no seletor de agentes do Chat.
 
 > [!TIP]
-> Para os dois arquivos completos e a verificação na interface, consulte as
+> Para o passo a passo clique a clique, os dois arquivos completos e a verificação de cada
+> permissão, consulte as
 > [instruções completas](https://github.com/{{ repository }}/blob/main/.github/help/02-configurar-delegacao.md).
 
 Quando as restrições e o handoff estiverem conferidos, comente `configurado`.

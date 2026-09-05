@@ -1,5 +1,13 @@
 # Passo 3 — Revisar os critérios 8 e 9 — Instruções completas
 
+Neste passo, você verificará o comportamento dos agentes configurados no passo anterior. A
+solicitação será curta e natural para testar se o revisor delega por causa de suas próprias
+instruções, e não porque o prompt explicou como ele deveria funcionar.
+
+Você inspecionará a execução do subagente, a tarefa autossuficiente que ele recebeu e o resumo
+que devolveu. Em seguida, comparará o julgamento do revisor com uma evidência aberta
+manualmente no repositório e confirmará que a revisão não alterou arquivos.
+
 ## 1. Iniciar a revisão
 
 1. Abra uma conversa nova no Chat.
@@ -90,3 +98,9 @@ Antes de avançar, confirme:
 - [ ] a revisão não alterou arquivos.
 
 Se todos os itens estiverem confirmados, volte à issue e comente apenas `revisado`.
+
+## Referências
+
+- [Subagents in Visual Studio Code — invocação e inspeção](https://code.visualstudio.com/docs/agents/run/subagents)
+- [Use tools with agents — chamadas e aprovações](https://code.visualstudio.com/docs/agents/run/tools)
+- [`dotnet test` — filtros e execução focada](https://learn.microsoft.com/dotnet/core/tools/dotnet-test)

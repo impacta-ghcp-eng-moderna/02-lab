@@ -1,6 +1,13 @@
 # Passo 3 — Revisar os critérios 8 e 9
 
-**Tempo sugerido: 7 minutos**
+Neste passo, você usará **Revisor da entrega** como um usuário real usaria: informará apenas o
+objeto da revisão e observará se o agente segue sua configuração persistente. O prompt não
+mandará delegar nem antecipará onde procurar as evidências.
+
+O revisor deverá invocar o pesquisador, avaliar o resultado recebido, executar a validação
+focada e produzir as conclusões finais. Você inspecionará a chamada do subagente e conferirá
+manualmente uma evidência, porque uma resposta plausível do agente não substitui a verificação
+humana.
 
 Use a configuração criada para revisar somente a listagem de inscritos:
 

@@ -1,9 +1,15 @@
 # Passo 1 — Preparar a revisão
 
-**Tempo sugerido: 10 minutos**
-
 Você partirá da aplicação concluída no Lab 01. Antes de configurar novos agentes, confirme a
 linha de base e localize os contratos e evidências que serão revisados.
+
+Neste passo, você abrirá o Codespace, mudará para a branch `inicio` e executará somente os
+testes relacionados à listagem de inscritos. Essa linha de base permitirá distinguir um
+problema introduzido durante o lab de um comportamento que já existia.
+
+Você também localizará a especificação, a implementação, os testes e o agente revisor. Ainda
+não haverá configuração nem correção: o objetivo é reconhecer o material que será usado nos
+próximos passos e confirmar que o ambiente está pronto.
 
 [![Abrir no GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/{{ repository }}?quickstart=1)
 
