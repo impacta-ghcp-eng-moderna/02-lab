@@ -1,5 +1,5 @@
 {
-  "name": "01-lab",
+  "name": "02-lab",
   "image": "mcr.microsoft.com/devcontainers/dotnet:1-10.0",
   "postCreateCommand": "sudo grep -rlZ 'dl.yarnpkg.com' /etc/apt/sources.list.d | sudo xargs -0 -r rm -f && sudo apt-get update && sudo apt-get install -y sqlite3 && dotnet --info && sqlite3 --version",
   "forwardPorts": [5075],
